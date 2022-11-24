@@ -114,20 +114,19 @@ var postsCmd = &cobra.Command{
 				tweetCounter++
 			}
 
-			for _,n := range divNodes {
-				// ungodly way to grab divs, rendering without the css
-				// is a nightmare
-				continue
+			// for _,n := range divNodes {
+			// 	// ungodly way to grab divs, rendering without the css
+			// 	// is a nightmare
 				
-				// var html string
-				// chromedp.Run(ctx,
-				// 	chromedp.ActionFunc(func(ctx context.Context) error {
-				// 		html, err = dom.GetOuterHTML().WithNodeID(n.NodeID).Do(ctx)
-				// 		return err
-				// 	}),
-				// )
-				// fmt.Println(html)
-			}
+			// 	var html string
+			// 	chromedp.Run(ctx,
+			// 		chromedp.ActionFunc(func(ctx context.Context) error {
+			// 			html, err = dom.GetOuterHTML().WithNodeID(n.NodeID).Do(ctx)
+			// 			return err
+			// 		}),
+			// 	)
+			// 	fmt.Println(html)
+			// }
 
 			var scrollStatus bool
 
