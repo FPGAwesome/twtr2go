@@ -5,7 +5,10 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
+	"twtr2go/util"
 
+	"github.com/chromedp/chromedp"
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +21,26 @@ var followersCmd = &cobra.Command{
 	
 	Optional flags: `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("followers called")
+
+		if len(args) < 1 || !strings.Contains( cmd.Flag("login").Value.String(), ":" ){
+			fmt.Println("Error: You must run this on a username and specify login information.\n",
+			"Format: twtr2go posts --login <user>:<pass> <target username>")
+
+			return
+		}
+
+
+		loginDetails := strings.Split(cmd.Flag("login").Value.String(),":")
+
+		_, cancel := util.Login(loginDetails[0],loginDetails[1])
+		defer cancel()
+
+		var html string
+
+		chromedp.OuterHTML(`body`, &html)
+
+		fmt.Println(html)
+
 	},
 }
 
@@ -34,4 +56,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// followersCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	followersCmd.Flags().StringP("login", "l", "user:pass", "Specify a user:pass pair for authentication.")
 }
